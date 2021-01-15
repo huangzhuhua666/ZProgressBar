@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="BaseProgressBar">
+        <attr name="max" format="integer"/>
+        <attr name="secondaryProgress" format="integer"/>
+        <attr name="progress" format="integer"/>
+
+        <attr name="botColor" format="color"/>
+        <attr name="botGradientStart" format="color"/>
+        <attr name="botGradientEnd" format="color"/>
+
+        <attr name="secondaryColor" format="color"/>
+        <attr name="secondaryGradientStart" format="color"/>
+        <attr name="secondaryGradientEnd" format="color"/>
+
+        <attr name="progressColor" format="color"/>
+        <attr name="progressGradientStart" format="color"/>
+        <attr name="progressGradientEnd" format="color"/>
+
+        <attr name="animDuration" format="integer"/>
+    </declare-styleable>
+
+    <declare-styleable name="RectProgressBar">
+        <attr name="botCorner" format="dimension"/>
+        <attr name="secondaryCorner" format="dimension"/>
+        <attr name="progressCorner" format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="CircleProgressBar">
+        <attr name="startPosition" format="enum">
+            <enum name="START" value="0"/>
+            <enum name="TOP" value="1"/>
+            <enum name="END" value="2"/>
+            <enum name="BOT" value="3"/>
+        </attr>
+        <attr name="botStrokeWidth" format="dimension"/>
+        <attr name="secondaryStrokeWidth" format="dimension"/>
+        <attr name="progressStrokeWidth" format="dimension"/>
+    </declare-styleable>
+</resources>
