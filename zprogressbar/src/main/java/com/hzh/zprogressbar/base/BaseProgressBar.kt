@@ -170,26 +170,35 @@ abstract class BaseProgressBar @JvmOverloads constructor(
         }
     }
 
+    /**
+     * 设置第二进度
+     * @param progress 第二进度
+     */
     @Synchronized
     fun setSecondaryProgress(progress: Int) {
         if (progress < 0) return
 
-        val p = if (progress > mMaxProgress) mMaxProgress else progress
+        val p = if (progress > mMaxProgress) mMaxProgress else progress // 最大进度控制
 
-        if (mSecondaryProgress == p) return
+        if (mSecondaryProgress == p) return // 进度一样就不需要刷新界面了
 
         mSecondaryProgress = p
 
         refreshProgress(isSecondary = true, isAnimate = false, mSecondaryProgress)
     }
 
+    /**
+     * 设置进度
+     * @param progress 进度
+     * @param isAnimate 是否显示动画
+     */
     @Synchronized
     fun setProgress(progress: Int, isAnimate: Boolean = false) {
         if (progress < 0) return
 
-        val p = if (progress > mMaxProgress) mMaxProgress else progress
+        val p = if (progress > mMaxProgress) mMaxProgress else progress // 最大进度控制
 
-        if (mProgress == p) return
+        if (mProgress == p) return // 进度一样就不需要刷新界面了
 
         mProgress = p
 
@@ -198,8 +207,9 @@ abstract class BaseProgressBar @JvmOverloads constructor(
 
     @Synchronized
     private fun refreshProgress(isSecondary: Boolean, isAnimate: Boolean, progress: Int) {
+        // 判断是否为ui线程
         if (Thread.currentThread().id == mUiThreadId) doRefreshProgress(isSecondary, isAnimate, progress)
-        else {
+        else { // 在子线程中
             if (mRefreshProgressRunnable == null)
                 mRefreshProgressRunnable = RefreshProgressRunnable()
 
@@ -214,7 +224,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
 
     @Synchronized
     private fun doRefreshProgress(isSecondary: Boolean, isAnimate: Boolean, progress: Int) {
-        if (!isSecondary && isAnimate) {
+        if (!isSecondary && isAnimate) { // 显示动画
             mAnim?.run { if (isRunning) cancel() }
 
             mAnim = ValueAnimator.ofFloat(mOldProgress.toFloat(), progress.toFloat()).apply {
