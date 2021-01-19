@@ -70,43 +70,49 @@ open class CircleProgressBar @JvmOverloads constructor(
     }
 
     override fun drawPrimary(c: Canvas, paint: Paint) {
-        c.run {
-            paint.run {
-                style = Paint.Style.STROKE
-                strokeWidth = mBotStrokeWidth
-            }
-
-            drawCircle(mWidth / 2f, mHeight / 2f, mRadius, paint)
+        paint.run {
+            style = Paint.Style.STROKE
+            strokeWidth = mBotStrokeWidth
         }
+
+        c.drawCircle(mWidth / 2f, mHeight / 2f, mRadius, paint)
     }
 
     override fun drawSecondary(c: Canvas, ratio: Float, paint: Paint) {
-        c.run {
-            paint.run {
-                style = Paint.Style.STROKE
-                strokeWidth = mSecondaryStrokeWidth
-            }
-
-            // 画圆弧
-            val halfW = mWidth / 2f
-            val halfH = mHeight / 2f
-            val rect = RectF(halfW - mRadius, halfH - mRadius, halfW + mRadius, halfH + mRadius)
-            drawArc(rect, mStartAngle, 360 * ratio, false, paint)
+        paint.run {
+            style = Paint.Style.STROKE
+            strokeWidth = mSecondaryStrokeWidth
         }
+
+        // 画圆弧
+        val halfW = mWidth / 2f
+        val halfH = mHeight / 2f
+        val rect = RectF(halfW - mRadius, halfH - mRadius, halfW + mRadius, halfH + mRadius)
+        c.drawArc(rect, mStartAngle, 360 * ratio, false, paint)
     }
 
     override fun drawProgress(c: Canvas, ratio: Float, paint: Paint) {
-        c.run {
-            paint.run {
-                style = Paint.Style.STROKE
-                strokeWidth = mProgressStrokeWidth
-            }
+        paint.run {
+            style = Paint.Style.STROKE
+            strokeWidth = mProgressStrokeWidth
+        }
 
-            // 画圆弧
-            val halfW = mWidth / 2f
-            val halfH = mHeight / 2f
-            val rect = RectF(halfW - mRadius, halfH - mRadius, halfW + mRadius, halfH + mRadius)
-            drawArc(rect, mStartAngle, 360 * ratio, false, paint)
+        // 画圆弧
+        val halfW = mWidth / 2f
+        val halfH = mHeight / 2f
+        val rect = RectF(halfW - mRadius, halfH - mRadius, halfW + mRadius, halfH + mRadius)
+        c.drawArc(rect, mStartAngle, 360 * ratio, false, paint)
+    }
+
+    override fun drawTxt(c: Canvas, ratio: Float, text: String, paint: Paint) {
+        paint.let {
+            // 画文字
+            c.drawText(
+                text,
+                (mWidth - it.measureText(text)) / 2,
+                (mHeight - it.descent() - it.ascent()) / 2,
+                it
+            )
         }
     }
 }

@@ -12,6 +12,7 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.annotation.ColorInt
 import androidx.core.util.Pools
 import com.hzh.zprogressbar.R
+import com.hzh.zprogressbar.utils.sp2px
 import java.util.*
 
 /**
@@ -63,6 +64,15 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     private var mOldProgress = 0 // 控制动画的
     private var mCurrProgress = 0 // 用来更新ui的
 
+    private var mIsShowText = false // 是否显示当前进度字体
+    private var mIsShowPercentTag = true // 是否显示'%'
+    protected var mTextSize = 12f.sp2px(context) // 字体大小
+        private set
+
+    @ColorInt
+    protected var mTextColor: Int = Color.BLACK // 字体颜色
+        private set
+
     private val mUiThreadId = Thread.currentThread().id
     private val mRefreshData = ArrayList<RefreshData>()
 
@@ -82,6 +92,14 @@ abstract class BaseProgressBar @JvmOverloads constructor(
 
     private val mProgressPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply { color = mProgressColor }
+    }
+
+    private val mTextPaint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            color = mTextColor
+            textSize = mTextSize
+            isDither = true
+        }
     }
 
     init {
@@ -109,6 +127,11 @@ abstract class BaseProgressBar @JvmOverloads constructor(
                 getColor(R.styleable.BaseProgressBar_progressColor, Color.parseColor("#fffdc100"))
             mProgressGradientStart = getColor(R.styleable.BaseProgressBar_progressGradientStart, -1)
             mProgressGradientEnd = getColor(R.styleable.BaseProgressBar_progressGradientEnd, -1)
+
+            mIsShowText = getBoolean(R.styleable.BaseProgressBar_isShowTxt, false)
+            mIsShowPercentTag = getBoolean(R.styleable.BaseProgressBar_isShowPercentTag, true)
+            mTextSize = getDimension(R.styleable.BaseProgressBar_txtSize, 12f.sp2px(context))
+            mTextColor = getColor(R.styleable.BaseProgressBar_txtColor, Color.BLACK)
 
             mAnimDuration = getInt(R.styleable.BaseProgressBar_animDuration, 500).toLong()
 
@@ -165,8 +188,18 @@ abstract class BaseProgressBar @JvmOverloads constructor(
             // 画第二进度
             drawSecondary(this, mCurrSecondaryProgress.toFloat() / mMaxProgress, mSecondaryPaint)
 
+            val currRatio = mCurrProgress.toFloat() / mMaxProgress
             // 画当前进度
-            drawProgress(this, mCurrProgress.toFloat() / mMaxProgress, mProgressPaint)
+            drawProgress(this, currRatio, mProgressPaint)
+
+            // 显示文字进度
+            if (mIsShowText) drawTxt(
+                this,
+                currRatio,
+                if (mIsShowPercentTag) "${(currRatio * 100).toInt()}%"
+                else (currRatio * 100).toInt().toString(),
+                mTextPaint
+            )
         }
     }
 
@@ -300,6 +333,11 @@ abstract class BaseProgressBar @JvmOverloads constructor(
      * 画当前进度
      */
     protected abstract fun drawProgress(c: Canvas, ratio: Float, paint: Paint)
+
+    /**
+     * 画文字进度
+     */
+    protected abstract fun drawTxt(c: Canvas, ratio: Float, text: String, paint: Paint)
 
     private class RefreshData private constructor() {
 

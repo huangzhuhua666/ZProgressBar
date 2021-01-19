@@ -1,40 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <attr name="botStrokeWidth" format="dimension"/>
+
     <declare-styleable name="BaseProgressBar">
+        <!--最大进度-->
         <attr name="max" format="integer"/>
+        <!--第二进度-->
         <attr name="secondaryProgress" format="integer"/>
+        <!--当前进度-->
         <attr name="progress" format="integer"/>
 
+        <!--进度背景条颜色-->
         <attr name="botColor" format="color"/>
+        <!--进度背景条渐变开始颜色-->
         <attr name="botGradientStart" format="color"/>
+        <!--进度背景条渐变结束颜色-->
         <attr name="botGradientEnd" format="color"/>
 
+        <!--第二进度条颜色-->
         <attr name="secondaryColor" format="color"/>
+        <!--第二进度条渐变开始颜色-->
         <attr name="secondaryGradientStart" format="color"/>
+        <!--第二进度条渐变结束颜色-->
         <attr name="secondaryGradientEnd" format="color"/>
 
+        <!--当前进度条颜色-->
         <attr name="progressColor" format="color"/>
+        <!--当前进度条渐变开始颜色-->
         <attr name="progressGradientStart" format="color"/>
+        <!--当前进度条渐变结束颜色-->
         <attr name="progressGradientEnd" format="color"/>
 
+        <!--动画时长，默认500-->
         <attr name="animDuration" format="integer"/>
+
+        <!--是否显示当前进度字体-->
+        <attr name="isShowTxt" format="boolean"/>
+        <!--是否显示'%'-->
+        <attr name="isShowPercentTag" format="boolean"/>
+        <!--字体大小-->
+        <attr name="txtSize" format="dimension"/>
+        <!--字体颜色-->
+        <attr name="txtColor" format="color"/>
     </declare-styleable>
 
     <declare-styleable name="RectProgressBar">
+        <!--进度条背景圆角-->
         <attr name="botCorner" format="dimension"/>
+        <!--第二进度条圆角-->
         <attr name="secondaryCorner" format="dimension"/>
+        <!--当前进度条圆角-->
         <attr name="progressCorner" format="dimension"/>
+
+        <!--进度条背景的描边边宽-->
+        <attr name="botStrokeWidth"/>
+        <!--进度条背景的描边颜色-->
+        <attr name="botStrokeColor" format="color"/>
+
+        <!--字体是否跟随进度条移动-->
+        <attr name="isTxtFollowProgress" format="boolean"/>
+        <!--字体随进度条移动时，字体显示在进图条内还是进度条外，默认在内部-->
+        <attr name="txtFollowType" format="enum">
+            <enum name="inner" value="0"/>
+            <enum name="outer" value="1"/>
+        </attr>
+        <!--字体摆放位置，如果设置了字体跟随，则失效默认在左边-->
+        <attr name="txtAlign" format="enum">
+            <enum name="LEFT" value="0"/>
+            <enum name="CENTER" value="1"/>
+            <enum name="RIGHT" value="2"/>
+        </attr>
+        <!--字体被进度条覆盖部分的颜色-->
+        <attr name="txtColorCover" format="color"/>
+        <!--字体水平方向的间隔-->
+        <attr name="txtMarginHorizontal" format="dimension"/>
     </declare-styleable>
 
     <declare-styleable name="CircleProgressBar">
+        <!--进度出现的起始位置-->
         <attr name="startPosition" format="enum">
-            <enum name="START" value="0"/>
+            <enum name="LEFT" value="0"/>
             <enum name="TOP" value="1"/>
-            <enum name="END" value="2"/>
+            <enum name="RIGHT" value="2"/>
             <enum name="BOT" value="3"/>
         </attr>
-        <attr name="botStrokeWidth" format="dimension"/>
+
+        <!--进度条背景的边宽-->
+        <attr name="botStrokeWidth"/>
+        <!--第二进度的边宽-->
         <attr name="secondaryStrokeWidth" format="dimension"/>
+        <!--当前进度的边宽-->
         <attr name="progressStrokeWidth" format="dimension"/>
     </declare-styleable>
 </resources>
