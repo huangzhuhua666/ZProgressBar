@@ -5,6 +5,8 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.os.Parcel
+import android.os.Parcelable
 import android.util.AttributeSet
 import android.view.View
 import android.view.ViewGroup
@@ -59,7 +61,6 @@ abstract class BaseProgressBar @JvmOverloads constructor(
 
     private var mMaxProgress = 100 // 最大进度
     private var mSecondaryProgress = 0 // 第二进度
-    private var mCurrSecondaryProgress = 0 // 用来更新ui的
     private var mProgress = 0 // 当前进度
     private var mOldProgress = 0 // 控制动画的
     private var mCurrProgress = 0 // 用来更新ui的
@@ -186,7 +187,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
             drawPrimary(this, mBotPaint)
 
             // 画第二进度
-            drawSecondary(this, mCurrSecondaryProgress.toFloat() / mMaxProgress, mSecondaryPaint)
+            drawSecondary(this, mSecondaryProgress.toFloat() / mMaxProgress, mSecondaryPaint)
 
             val currRatio = mCurrProgress.toFloat() / mMaxProgress
             // 画当前进度
@@ -201,6 +202,21 @@ abstract class BaseProgressBar @JvmOverloads constructor(
                 mTextPaint
             )
         }
+    }
+
+    @Synchronized
+    fun setMax(max: Int) {
+        if (max < 0) return
+
+        if (max == mMaxProgress) return
+
+        mMaxProgress = max
+        postInvalidate()
+
+        if (mSecondaryProgress > mMaxProgress) mSecondaryProgress = mMaxProgress
+        if (mProgress > mMaxProgress) mProgress = mMaxProgress
+
+        refreshProgress(isSecondary = false, isAnimate = false, mProgress)
     }
 
     /**
@@ -277,7 +293,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
             if (!isSecondary) {
                 mOldProgress = progress
                 mCurrProgress = progress
-            } else mCurrSecondaryProgress = progress
+            }
 
             invalidate()
         }
@@ -312,6 +328,20 @@ abstract class BaseProgressBar @JvmOverloads constructor(
 
         super.onDetachedFromWindow()
         mAttached = false
+    }
+
+    override fun onSaveInstanceState(): Parcelable? = SavedState(super.onSaveInstanceState()).apply {
+        progress = mProgress
+        secondaryProgress = mSecondaryProgress
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        (state as SavedState?)?.run {
+            super.onRestoreInstanceState(superState)
+
+            setProgress(progress)
+            setSecondaryProgress(secondaryProgress)
+        }
     }
 
     @Synchronized
@@ -384,6 +414,39 @@ abstract class BaseProgressBar @JvmOverloads constructor(
 
                 mRefreshData.clear()
                 mRefreshIsPosted = false
+            }
+        }
+    }
+
+    class SavedState : BaseSavedState {
+
+        var progress = 0
+        var secondaryProgress = 0
+
+        constructor(superState: Parcelable?) : super(superState)
+
+        private constructor(source: Parcel?) : super(source) {
+            source?.run {
+                progress = readInt()
+                secondaryProgress = readInt()
+            }
+        }
+
+        override fun writeToParcel(out: Parcel, flags: Int) {
+            super.writeToParcel(out, flags)
+            out.run {
+                writeInt(progress)
+                writeInt(secondaryProgress)
+            }
+        }
+
+        companion object {
+
+            val CREATOR = object : Parcelable.Creator<SavedState> {
+
+                override fun createFromParcel(source: Parcel?): SavedState = SavedState(source)
+
+                override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
             }
         }
     }
