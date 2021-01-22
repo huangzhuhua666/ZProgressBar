@@ -65,10 +65,10 @@ dependencies {
 //
 //publish {
 //    userOrg = 'huangzhuhua666'
-//    groupId = 'com.hzh.zprogressbar'
+//    groupId = 'com.hzh.ui'
 //    artifactId = 'progressbar'
 //    publishVersion = '1.0.0'
-//    desc = ''
+//    desc = 'A ProgressBar library for Android'
 //    website = 'https://github.com/huangzhuhua666/ZProgressBar'
 //}
 //// endregion

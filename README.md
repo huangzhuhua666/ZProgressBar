@@ -1,2 +1,2 @@
 # ZProgressBar
-A ProgresssBar library for Android
+A ProgressBar library for Android
