@@ -5,7 +5,7 @@
     <declare-styleable name="BaseProgressBar">
         <!--最大进度-->
         <attr name="max" format="integer"/>
-        <!--第二进度-->
+        <!--副进度-->
         <attr name="secondaryProgress" format="integer"/>
         <!--当前进度-->
         <attr name="progress" format="integer"/>
@@ -17,11 +17,11 @@
         <!--进度背景条渐变结束颜色-->
         <attr name="botGradientEnd" format="color"/>
 
-        <!--第二进度条颜色-->
+        <!--副进度条颜色-->
         <attr name="secondaryColor" format="color"/>
-        <!--第二进度条渐变开始颜色-->
+        <!--副进度条渐变开始颜色-->
         <attr name="secondaryGradientStart" format="color"/>
-        <!--第二进度条渐变结束颜色-->
+        <!--副进度条渐变结束颜色-->
         <attr name="secondaryGradientEnd" format="color"/>
 
         <!--当前进度条颜色-->
@@ -47,7 +47,7 @@
     <declare-styleable name="RectProgressBar">
         <!--进度条背景圆角-->
         <attr name="botCorner" format="dimension"/>
-        <!--第二进度条圆角-->
+        <!--副进度条圆角-->
         <attr name="secondaryCorner" format="dimension"/>
         <!--当前进度条圆角-->
         <attr name="progressCorner" format="dimension"/>
@@ -87,7 +87,7 @@
 
         <!--进度条背景的边宽-->
         <attr name="botStrokeWidth"/>
-        <!--第二进度的边宽-->
+        <!--副进度的边宽-->
         <attr name="secondaryStrokeWidth" format="dimension"/>
         <!--当前进度的边宽-->
         <attr name="progressStrokeWidth" format="dimension"/>
