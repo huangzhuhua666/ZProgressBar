@@ -42,13 +42,13 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     private var mBotGradientEnd: Int = -1 // 底部渐变终点颜色
 
     @ColorInt
-    private var mSecondaryColor: Int = Color.parseColor("#ff00bfff") // 第二进度颜色
+    private var mSecondaryColor: Int = Color.parseColor("#ff00bfff") // 副进度颜色
 
     @ColorInt
-    private var mSecondaryGradientStart: Int = -1 // 第二进度渐变起点颜色
+    private var mSecondaryGradientStart: Int = -1 // 副进度渐变起点颜色
 
     @ColorInt
-    private var mSecondaryGradientEnd: Int = -1 // 第二进度渐变终点颜色
+    private var mSecondaryGradientEnd: Int = -1 // 副进度渐变终点颜色
 
     @ColorInt
     private var mProgressColor: Int = Color.parseColor("#fffdc100") // 当前进度颜色
@@ -60,7 +60,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     private var mProgressGradientEnd: Int = -1 // 当前进度渐变终点颜色
 
     private var mMaxProgress = 100 // 最大进度
-    private var mSecondaryProgress = 0 // 第二进度
+    private var mSecondaryProgress = 0 // 副进度
     private var mProgress = 0 // 当前进度
     private var mOldProgress = 0 // 控制动画的
     private var mCurrProgress = 0 // 用来更新ui的
@@ -169,7 +169,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
         if (mBotGradientStart != -1 && mBotGradientEnd != -1)
             createGradient(intArrayOf(mBotGradientStart, mBotGradientEnd), mBotPaint)
 
-        // 设置第二进度的渐变色
+        // 设置副进度的渐变色
         if (mSecondaryGradientStart != -1 && mSecondaryGradientEnd != -1)
             createGradient(intArrayOf(mSecondaryGradientStart, mSecondaryGradientEnd), mSecondaryPaint)
 
@@ -186,7 +186,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
             // 画进度条底部
             drawPrimary(this, mBotPaint)
 
-            // 画第二进度
+            // 画副进度
             drawSecondary(this, mSecondaryProgress.toFloat() / mMaxProgress, mSecondaryPaint)
 
             val currRatio = mCurrProgress.toFloat() / mMaxProgress
@@ -220,8 +220,8 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     }
 
     /**
-     * 设置第二进度
-     * @param progress 第二进度
+     * 设置副进度
+     * @param progress 副进度
      */
     @Synchronized
     fun setSecondaryProgress(progress: Int) {
@@ -355,7 +355,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     protected abstract fun drawPrimary(c: Canvas, paint: Paint)
 
     /**
-     * 画第二进度
+     * 画副进度
      */
     protected abstract fun drawSecondary(c: Canvas, ratio: Float, paint: Paint)
 

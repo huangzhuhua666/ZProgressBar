@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.hzh.zprogressbar.RectProgressBar
+            android:id="@+id/pb1"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:max="50"
+            app:secondaryProgress="25"/>
+
+        <com.hzh.zprogressbar.RectProgressBar
+            android:id="@+id/pb2"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:botColor="#999999"
+            app:botCorner="10dp"
+            app:max="100"
+            app:progressCorner="10dp"
+            app:progressGradientEnd="#f78316"
+            app:progressGradientStart="#ffc859"
+            app:secondaryColor="@color/teal_200"
+            app:secondaryCorner="6dp"
+            app:secondaryProgress="66"/>
+
+        <com.hzh.zprogressbar.RectProgressBar
+            android:id="@+id/pb3"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:botCorner="10dp"
+            app:botStrokeColor="@color/purple_200"
+            app:botStrokeWidth="1dp"
+            app:isShowTxt="true"
+            app:max="100"
+            app:progressCorner="10dp"
+            app:progressGradientEnd="#f78316"
+            app:progressGradientStart="#ffc859"
+            app:txtAlign="LEFT"
+            app:txtColor="@color/purple_200"
+            app:txtMarginHorizontal="20dp"
+            app:txtSize="10sp"/>
+
+        <com.hzh.zprogressbar.RectProgressBar
+            android:id="@+id/pb4"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:botCorner="10dp"
+            app:botStrokeColor="@color/purple_200"
+            app:botStrokeWidth="1dp"
+            app:isShowTxt="true"
+            app:max="100"
+            app:progressCorner="10dp"
+            app:progressGradientEnd="@color/teal_700"
+            app:progressGradientStart="@color/teal_200"
+            app:txtAlign="CENTER"
+            app:txtColorCover="@color/white"/>
+
+        <com.hzh.zprogressbar.RectProgressBar
+            android:id="@+id/pb5"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:botCorner="10dp"
+            app:botStrokeColor="@color/purple_200"
+            app:botStrokeWidth="1dp"
+            app:isShowTxt="true"
+            app:max="100"
+            app:progressCorner="10dp"
+            app:progressGradientEnd="#f78316"
+            app:progressGradientStart="#ffc859"
+            app:txtAlign="RIGHT"
+            app:txtColorCover="@color/white"/>
+
+        <com.hzh.zprogressbar.RectProgressBar
+            android:id="@+id/pb6"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:botCorner="10dp"
+            app:botStrokeColor="@color/purple_200"
+            app:botStrokeWidth="1dp"
+            app:isShowTxt="true"
+            app:isTxtFollowProgress="true"
+            app:max="100"
+            app:progressCorner="10dp"
+            app:progressGradientEnd="@color/teal_700"
+            app:progressGradientStart="@color/teal_200"
+            app:txtColorCover="@color/white"
+            app:txtMarginHorizontal="20dp"/>
+
+        <com.hzh.zprogressbar.RectProgressBar
+            android:id="@+id/pb7"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:botCorner="10dp"
+            app:botStrokeColor="@color/purple_200"
+            app:botStrokeWidth="1dp"
+            app:isShowTxt="true"
+            app:isTxtFollowProgress="true"
+            app:max="100"
+            app:progressCorner="10dp"
+            app:progressGradientEnd="#f78316"
+            app:progressGradientStart="#ffc859"
+            app:txtColorCover="@color/white"
+            app:txtFollowType="outer"
+            app:txtMarginHorizontal="20dp"/>
+
+        <com.hzh.zprogressbar.RectProgressBar
+            android:id="@+id/pb8"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_margin="10dp"
+            app:animDuration="1000"
+            app:botCorner="10dp"
+            app:botStrokeColor="@color/purple_200"
+            app:botStrokeWidth="1dp"
+            app:isShowPercentTag="false"
+            app:isShowTxt="true"
+            app:isTxtFollowProgress="true"
+            app:max="100"
+            app:progressCorner="10dp"
+            app:progressGradientEnd="@color/teal_700"
+            app:progressGradientStart="@color/teal_200"
+            app:txtColorCover="@color/white"
+            app:txtFollowType="inner"
+            app:txtMarginHorizontal="20dp"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

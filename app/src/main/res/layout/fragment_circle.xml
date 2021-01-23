@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.hzh.zprogressbar.CircleProgressBar
+            android:id="@+id/pb1"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            app:max="100"
+            app:progressGradientEnd="#f78316"
+            app:progressGradientStart="#ffc859"/>
+
+        <com.hzh.zprogressbar.CircleProgressBar
+            android:id="@+id/pb2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            app:botStrokeWidth="20dp"
+            app:max="100"
+            app:progressGradientEnd="@color/teal_700"
+            app:progressGradientStart="@color/teal_200"
+            app:secondaryProgress="50"/>
+
+        <com.hzh.zprogressbar.CircleProgressBar
+            android:id="@+id/pb3"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            app:max="100"
+            app:progressGradientEnd="#f78316"
+            app:progressGradientStart="#ffc859"
+            app:progressStrokeWidth="20dp"/>
+
+        <com.hzh.zprogressbar.CircleProgressBar
+            android:id="@+id/pb4"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            app:isShowTxt="true"
+            app:max="100"
+            app:progressGradientEnd="@color/teal_700"
+            app:progressGradientStart="@color/teal_200"
+            app:startPosition="RIGHT"/>
+
+        <com.hzh.zprogressbar.CircleProgressBar
+            android:id="@+id/pb5"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            app:animDuration="1000"
+            app:isShowTxt="true"
+            app:max="100"
+            app:progressGradientEnd="#f78316"
+            app:progressGradientStart="#ffc859"
+            app:startPosition="TOP"/>
+
+        <com.hzh.zprogressbar.CircleProgressBar
+            android:id="@+id/pb6"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_margin="5dp"
+            app:isShowPercentTag="false"
+            app:isShowTxt="true"
+            app:max="100"
+            app:progressGradientEnd="@color/teal_700"
+            app:progressGradientStart="@color/teal_200"
+            app:startPosition="BOT"/>
+
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

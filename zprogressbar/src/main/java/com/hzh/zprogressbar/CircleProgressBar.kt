@@ -20,7 +20,7 @@ open class CircleProgressBar @JvmOverloads constructor(
 
     private var mBotStrokeWidth = 10f.dp2px(context) // 底部边宽
 
-    private var mSecondaryStrokeWidth = 10f.dp2px(context) // 第二进度边宽
+    private var mSecondaryStrokeWidth = 10f.dp2px(context) // 副进度边宽
 
     private var mProgressStrokeWidth = 10f.dp2px(context) // 最大进度边宽
 

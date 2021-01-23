@@ -1,19 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:background="#f5f5f5"
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <com.angcyo.tablayout.DslTabLayout
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:background="@color/white"
+        app:tab_deselect_color="#666666"
+        app:tab_draw_indicator="true"
+        app:tab_indicator_drawable="@drawable/indicator"
+        app:tab_indicator_enable_flow="true"
+        app:tab_indicator_height="2dp"
+        app:tab_indicator_style="STYLE_BOTTOM"
+        app:tab_indicator_width="27dp"
+        app:tab_item_is_equ_width="false"
+        app:tab_select_color="#fdc100"
+        app:tab_text_max_size="13sp"
+        app:tab_text_min_size="13sp"
+        tools:tab_default_index="0">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            style="@style/TabTextStyle"
+            android:text="Rect"
+            tools:ignore="HardcodedText"/>
+
+        <TextView
+            style="@style/TabTextStyle"
+            android:text="Circle"
+            tools:ignore="HardcodedText"/>
+
+    </com.angcyo.tablayout.DslTabLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ededed"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:overScrollMode="never"
+        android:scrollbars="none"/>
+
+</LinearLayout>

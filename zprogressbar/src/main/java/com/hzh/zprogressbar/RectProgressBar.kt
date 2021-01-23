@@ -17,7 +17,7 @@ open class RectProgressBar @JvmOverloads constructor(
 ) : BaseProgressBar(context, attrs, defStyleAttr) {
 
     private var mBotCorner = 0f // 底部的圆角
-    private var mSecondaryCorner = 0f // 第二进度的圆角
+    private var mSecondaryCorner = 0f // 副进度的圆角
     private var mProgressCorner = 0f // 当前进度的圆角
 
     private var mBotStrokeWidth = 0f // 底部边宽
@@ -131,7 +131,7 @@ open class RectProgressBar @JvmOverloads constructor(
         c.run {
             save()
 
-            // 设置第二进度的圆角矩形裁剪区域
+            // 设置副进度的圆角矩形裁剪区域
             mRectRatio.set(0f, 0f, mWidth * ratio, mHeight.toFloat())
             // 进度满了之后，右边的圆角要以底部的圆角为准，否则会出现奇怪的画面
             val endCorner = if (ratio == 1f) mBotCorner else mSecondaryCorner
@@ -155,7 +155,7 @@ open class RectProgressBar @JvmOverloads constructor(
         c.run {
             save()
 
-            // 设置第二进度的圆角矩形裁剪区域
+            // 设置副进度的圆角矩形裁剪区域
             mRectRatio.set(0f, 0f, mWidth * ratio, mHeight.toFloat())
             // 进度满了之后，右边的圆角要以底部的圆角为准，否则会出现奇怪的画面
             val endCorner = if (ratio == 1f) mBotCorner else mProgressCorner
