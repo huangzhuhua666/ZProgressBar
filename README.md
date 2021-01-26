@@ -4,7 +4,7 @@
 这是一个可灵活配置的进度条，抛弃原生ProgressBar麻烦的配置style和progressDrawable形式，可直接在xml中配置进度条的颜色和圆角等功能。如果你觉得这个控件对你有帮助，请在右上角留下你的start。
 
 <p align="center">
-    <img src="https://github.com/huangzhuhua666/ZProgressBar/images/rect.gif" style="zoom:50%;" /><img src="https://github.com/huangzhuhua666/ZProgressBar/images/circle.gif" style="zoom:50%;" />
+    <img src="https://github.com/huangzhuhua666/ZProgressBar/blob/main/images/rect.gif" style="zoom:50%;" /><img src="https://github.com/huangzhuhua666/ZProgressBar/blob/main/images/circle.gif" style="zoom:50%;" />
 </p>
 
 ## 目录
