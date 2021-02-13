@@ -59,9 +59,15 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     @ColorInt
     private var mProgressGradientEnd: Int = -1 // 当前进度渐变终点颜色
 
-    private var mMaxProgress = 100 // 最大进度
-    private var mSecondaryProgress = 0 // 副进度
-    private var mProgress = 0 // 当前进度
+    var mMaxProgress = 100 // 最大进度
+        private set
+
+    var mSecondaryProgress = 0 // 副进度
+        private set
+
+    var mProgress = 0 // 当前进度
+        private set
+
     private var mOldProgress = 0 // 控制动画的
     private var mCurrProgress = 0 // 用来更新ui的
 
