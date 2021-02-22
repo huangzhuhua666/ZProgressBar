@@ -59,14 +59,11 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     @ColorInt
     private var mProgressGradientEnd: Int = -1 // 当前进度渐变终点颜色
 
-    var mMaxProgress = 100 // 最大进度
-        private set
+    private var mMaxProgress = 100 // 最大进度
 
-    var mSecondaryProgress = 0 // 副进度
-        private set
+    private var mSecondaryProgress = 0 // 副进度
 
-    var mProgress = 0 // 当前进度
-        private set
+    private var mProgress = 0 // 当前进度
 
     private var mOldProgress = 0 // 控制动画的
     private var mCurrProgress = 0 // 用来更新ui的
@@ -83,11 +80,13 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     private val mUiThreadId = Thread.currentThread().id
     private val mRefreshData = ArrayList<RefreshData>()
 
+    protected var mIsFromUser = false // 是否由用户触摸改变的进度
     private var mAttached = false
     private var mRefreshIsPosted = false
     private var mAnimDuration = 500L // 动画时长
     private var mRefreshProgressRunnable: RefreshProgressRunnable? = null
     private var mAnim: ValueAnimator? = null
+    private var mProgressListener: ProgressListener? = null
 
     private val mBotPaint by lazy {
         Paint(Paint.ANTI_ALIAS_FLAG).apply { color = mBotColor }
@@ -198,6 +197,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
             val currRatio = mCurrProgress.toFloat() / mMaxProgress
             // 画当前进度
             drawProgress(this, currRatio, mProgressPaint)
+            mProgressListener?.onProgressChange(mIsFromUser, mCurrProgress)
 
             // 显示文字进度
             if (mIsShowText) drawTxt(
@@ -256,6 +256,7 @@ abstract class BaseProgressBar @JvmOverloads constructor(
         if (mProgress == p) return // 进度一样就不需要刷新界面了
 
         mProgress = p
+        mIsFromUser = false
 
         refreshProgress(false, isAnimate, mProgress)
     }
@@ -288,9 +289,12 @@ abstract class BaseProgressBar @JvmOverloads constructor(
 
                 addUpdateListener {
                     val curr = (it.animatedValue as Float).toInt()
-                    mOldProgress = curr
-                    mCurrProgress = curr
-                    invalidate()
+
+                    if (mOldProgress != curr) {
+                        mOldProgress = curr
+                        mCurrProgress = curr
+                        invalidate()
+                    }
                 }
 
                 start()
@@ -304,6 +308,184 @@ abstract class BaseProgressBar @JvmOverloads constructor(
             invalidate()
         }
     }
+
+    /**
+     * 设置底部进度条颜色
+     */
+    @Synchronized
+    fun setBotColor(@ColorInt color: Int) {
+        if (mBotColor == color) return
+
+        mBotColor = color
+        mBotPaint.color = mBotColor
+
+        mBotGradientStart = -1
+        mBotGradientEnd = -1
+        if (mBotPaint.shader != null) mBotPaint.shader = null
+
+        invalidate()
+    }
+
+    /**
+     * 设置副进度条颜色
+     */
+    @Synchronized
+    fun setSecondaryColor(@ColorInt color: Int) {
+        if (mSecondaryColor == color) return
+
+        mSecondaryColor = color
+        mSecondaryPaint.color = mSecondaryColor
+
+        mSecondaryGradientStart = -1
+        mSecondaryGradientEnd = -1
+        if (mSecondaryPaint.shader != null) mSecondaryPaint.shader = null
+
+        invalidate()
+    }
+
+    /**
+     * 设置进度条颜色
+     */
+    @Synchronized
+    fun setProgressColor(@ColorInt color: Int) {
+        if (mProgressColor == color) return
+
+        mProgressColor = color
+        mProgressPaint.color = mProgressColor
+
+        mProgressGradientStart = -1
+        mProgressGradientEnd = -1
+        if (mProgressPaint.shader != null) mProgressPaint.shader = null
+
+        invalidate()
+    }
+
+    /**
+     * 设置底部进度条的渐变色
+     */
+    @Synchronized
+    fun setBotGradient(@ColorInt start: Int, @ColorInt end: Int) {
+        if (start == -1 || end == -1) return
+        if (mBotGradientStart == start && mBotGradientEnd == end) return
+
+        mBotGradientStart = start
+        mBotGradientEnd = end
+
+        if (mWidth != 0 && mHeight != 0)
+            createGradient(intArrayOf(mBotGradientStart, mBotGradientEnd), mBotPaint)
+
+        invalidate()
+    }
+
+    /**
+     * 设置副进度条的渐变色
+     */
+    @Synchronized
+    fun setSecondaryGradient(@ColorInt start: Int, @ColorInt end: Int) {
+        if (start == -1 || end == -1) return
+        if (mSecondaryGradientStart == start && mSecondaryGradientEnd == end) return
+
+        mSecondaryGradientStart = start
+        mSecondaryGradientEnd = end
+
+        if (mWidth != 0 && mHeight != 0)
+            createGradient(intArrayOf(mSecondaryGradientStart, mSecondaryGradientEnd), mSecondaryPaint)
+
+        invalidate()
+    }
+
+    /**
+     * 设置进度条的渐变色
+     */
+    @Synchronized
+    fun setProgressGradient(@ColorInt start: Int, @ColorInt end: Int) {
+        if (start == -1 || end == -1) return
+        if (mProgressGradientStart == start && mProgressGradientEnd == end) return
+
+        mProgressGradientStart = start
+        mProgressGradientEnd = end
+
+        if (mWidth != 0 && mHeight != 0)
+            createGradient(intArrayOf(mProgressGradientStart, mProgressGradientEnd), mProgressPaint)
+
+        invalidate()
+    }
+
+    /**
+     * 设置是否显示进度字体
+     */
+    @Synchronized
+    fun setIsShowText(isShow: Boolean) {
+        if (mIsShowText == isShow) return
+
+        mIsShowText = isShow
+        invalidate()
+    }
+
+    /**
+     * 设置是否显示'%'
+     */
+    @Synchronized
+    fun setIsShowPercentTag(isShow: Boolean) {
+        if (mIsShowPercentTag == isShow) return
+
+        mIsShowPercentTag = isShow
+        invalidate()
+    }
+
+    /**
+     * 设置动画时长
+     */
+    @Synchronized
+    fun setAnimDuration(duration: Long) {
+        if (mAnimDuration == duration) return
+
+        mAnimDuration = duration
+    }
+
+    /**
+     * 设置字体颜色
+     */
+    @Synchronized
+    fun setTextColor(@ColorInt color: Int) {
+        if (mTextColor == color) return
+
+        mTextColor = color
+        mTextPaint.color = mTextColor
+
+        invalidate()
+    }
+
+    /**
+     * 设置字体大小，单位sp
+     */
+    @Synchronized
+    fun setTextSize(size: Int) {
+        val spSize = size.toFloat().sp2px(context)
+        if (mTextSize == spSize) return
+
+        mTextSize = spSize
+        mTextPaint.textSize = mTextSize
+
+        invalidate()
+    }
+
+    /**
+     * 设置进度变化监听
+     */
+    @Synchronized
+    fun setProgressListener(listener: ProgressListener) {
+        mProgressListener = listener
+    }
+
+    @Synchronized
+    fun getMax() = mMaxProgress
+
+    @Synchronized
+    fun getSecondaryProgress() = mSecondaryProgress
+
+    @Synchronized
+    fun getProgress() = mProgress
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
@@ -455,5 +637,10 @@ abstract class BaseProgressBar @JvmOverloads constructor(
                 override fun newArray(size: Int): Array<SavedState?> = arrayOfNulls(size)
             }
         }
+    }
+
+    fun interface ProgressListener {
+
+        fun onProgressChange(fromUser: Boolean, progress: Int)
     }
 }

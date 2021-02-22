@@ -115,4 +115,58 @@ open class CircleProgressBar @JvmOverloads constructor(
             )
         }
     }
+
+    /**
+     * 设置底部进度条边宽
+     */
+    @Synchronized
+    fun setBotStrokeWidth(width: Int) {
+        val dpWidth = width.toFloat().dp2px(context)
+
+        if (mBotStrokeWidth == dpWidth) return
+        mBotStrokeWidth = dpWidth
+
+        verifyRadius()
+
+        invalidate()
+    }
+
+    /**
+     * 设置副进度条边宽
+     */
+    @Synchronized
+    fun setSecondaryStrokeWidth(width: Int) {
+        val dpWidth = width.toFloat().dp2px(context)
+
+        if (mSecondaryStrokeWidth == dpWidth) return
+        mSecondaryStrokeWidth = dpWidth
+
+        verifyRadius()
+
+        invalidate()
+    }
+
+    /**
+     * 设置当前进度条边宽
+     */
+    @Synchronized
+    fun setProgressStrokeWidth(width: Int) {
+        val dpWidth = width.toFloat().dp2px(context)
+
+        if (mProgressStrokeWidth == dpWidth) return
+        mProgressStrokeWidth = dpWidth
+
+        verifyRadius()
+
+        invalidate()
+    }
+
+    private fun verifyRadius() {
+        if (mWidth == 0 || mHeight == 0) return
+
+        val maxStrokeWidth = maxOf(mBotStrokeWidth, mSecondaryStrokeWidth, mProgressStrokeWidth)
+        mRadius = (min(mWidth, mHeight) - maxStrokeWidth) / 2
+
+        if (mRadius <= 0f) throw IllegalArgumentException("radius require bigger than zero!")
+    }
 }

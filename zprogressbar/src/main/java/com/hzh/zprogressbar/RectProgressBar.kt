@@ -27,7 +27,7 @@ open class RectProgressBar @JvmOverloads constructor(
 
     private var mIsTxtFollowProgress = false // 字体是否跟随进度条移动
 
-    // 字体随进度条移动时，字体显示在进图条内还是进度条外，默认在内部
+    // 字体随进度条移动时，字体显示在进度条内还是进度条外，默认在内部
     private var mTextFollowStyle: TextFollowStyle = TextFollowStyle.INNER
 
     // 字体摆放位置，如果设置了字体跟随，则失效默认在左边
@@ -56,13 +56,13 @@ open class RectProgressBar @JvmOverloads constructor(
 
     private val mRectStroke by lazy {
         val half = mBotStrokeWidth / 2f
-        RectF(0 + half, 0 + half, mWidth - half, mHeight - half)
+        RectF(half, half, mWidth - half, mHeight - half)
     }
 
     private val mRectTotal by lazy {
         RectF(
-            0 + mBotStrokeWidth,
-            0 + mBotStrokeWidth,
+            mBotStrokeWidth,
+            mBotStrokeWidth,
             mWidth - mBotStrokeWidth,
             mHeight - mBotStrokeWidth
         )
@@ -146,7 +146,7 @@ open class RectProgressBar @JvmOverloads constructor(
             )
             clipPath(mClipPath)
 
-            drawRoundRect(mRectTotal, mSecondaryCorner, mSecondaryCorner, paint)
+            drawRoundRect(mRectTotal, mBotCorner, mBotCorner, paint)
             restore()
         }
     }
@@ -170,7 +170,7 @@ open class RectProgressBar @JvmOverloads constructor(
             )
             clipPath(mClipPath)
 
-            drawRoundRect(mRectTotal, mProgressCorner, mProgressCorner, paint)
+            drawRoundRect(mRectTotal, mBotCorner, mBotCorner, paint)
             restore()
         }
     }
@@ -229,6 +229,146 @@ open class RectProgressBar @JvmOverloads constructor(
                 c.drawPath(mTextPath, mTextCoverPaint)
             }
         }
+    }
+
+    /**
+     * 设置底部进度条的圆角
+     */
+    @Synchronized
+    fun setBotCorner(corner: Int) {
+        val dpCorner = corner.toFloat().dp2px(context)
+
+        if (mBotCorner == dpCorner) return
+        mBotCorner = dpCorner
+
+        invalidate()
+    }
+
+    /**
+     * 设置副进度条的圆角
+     */
+    @Synchronized
+    fun setSecondaryCorner(corner: Int) {
+        val dpCorner = corner.toFloat().dp2px(context)
+
+        if (mSecondaryCorner == dpCorner) return
+        mSecondaryCorner = dpCorner
+
+        invalidate()
+    }
+
+    /**
+     * 设置进度条的圆角
+     */
+    @Synchronized
+    fun setProgressCorner(corner: Int) {
+        val dpCorner = corner.toFloat().dp2px(context)
+
+        if (mProgressCorner == dpCorner) return
+        mProgressCorner = dpCorner
+
+        invalidate()
+    }
+
+    /**
+     * 设置描边宽度
+     */
+    @Synchronized
+    fun setBotStrokeWidth(width: Int) {
+        val dpWidth = width.toFloat().dp2px(context)
+
+        if (mBotStrokeWidth == dpWidth) return
+        mBotStrokeWidth = dpWidth
+        mStrokePaint.strokeWidth = mBotStrokeWidth
+
+        if (mWidth != 0 && mHeight != 0) {
+            val half = mBotStrokeWidth / 2f
+            mRectStroke.set(half, half, mWidth - half, mHeight - half)
+
+            mRectTotal.set(
+                mBotStrokeWidth,
+                mBotStrokeWidth,
+                mWidth - mBotStrokeWidth,
+                mHeight - mBotStrokeWidth
+            )
+        }
+
+        invalidate()
+    }
+
+    /**
+     * 设置描边颜色
+     */
+    @Synchronized
+    fun setBotStrokeColor(@ColorInt color: Int) {
+        if (mBotStrokeColor == color) return
+
+        mBotStrokeColor = color
+        mStrokePaint.color = mBotStrokeColor
+
+        invalidate()
+    }
+
+    /**
+     * 设置字体是否跟随当前进度条移动
+     */
+    @Synchronized
+    fun setIsTxtFollowProgress(isFollow: Boolean) {
+        if (mIsTxtFollowProgress == isFollow) return
+
+        mIsTxtFollowProgress = isFollow
+
+        invalidate()
+    }
+
+    /**
+     * 设置字体随进度条移动时，字体显示在进度条内还是进度条外
+     */
+    @Synchronized
+    fun setTextFollowStyle(style: TextFollowStyle) {
+        if (mTextFollowStyle == style) return
+
+        mTextFollowStyle = style
+
+        invalidate()
+    }
+
+    /**
+     * 设置字体摆放位置，如果设置了字体跟随，则失效默认在左边
+     */
+    @Synchronized
+    fun setTextAlign(align: TextAlign) {
+        if (mTextAlign == align) return
+
+        mTextAlign = align
+
+        invalidate()
+    }
+
+    /**
+     * 设置字体被进度条覆盖部分的颜色
+     */
+    @Synchronized
+    fun setTextColorCover(@ColorInt color: Int) {
+        if (mTextColorCover == color) return
+
+        mTextColorCover = color
+        mTextCoverPaint.color = mTextColorCover
+
+        invalidate()
+    }
+
+    /**
+     * 设置字体水平方向的间隔
+     */
+    @Synchronized
+    fun setTextMarginHorizontal(margin: Int) {
+        val dpMargin = margin.toFloat().dp2px(context)
+
+        if (mTextMarginHorizontal == dpMargin) return
+        mTextMarginHorizontal = dpMargin
+
+        invalidate()
     }
 
     enum class TextAlign {

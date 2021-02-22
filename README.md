@@ -20,11 +20,12 @@
 
 - 支持圆形、矩形、圆角矩形进度条
 - 支持副进度条
-- 支持在xml中配置渐变色、矩形进度条还支持描边
+- 支持在xml和代码中配置渐变色、矩形进度条还支持描边
 - 支持文字显示（文字位置、大小、颜色、是否跟随进度移动、被进度条覆盖的字体变色等）
+- 支持进度变化监听
 - 灵活拓展
 - 进度更新保留原生ProgressBar的形式
-- 更多功能正在开发中（如代码配置进度条的颜色等）...
+- 更多功能正在开发中...
 
 ## 引入
 
@@ -145,7 +146,7 @@ progressBar.setProgress(progress: Int, isAnimate: Boolean = false) // 设置当�
 
 *注意：上面这三个方法均可以在子线程调用。*
 
-***==重点：在设置layout_width和layout_height时，请不要设置为wrap_content或0dp而不设置layout_weight。尽量按照设计图的宽高来设置，否则当控件测量得到的width和height为0时会报错。==***
+***重点：在设置layout_width和layout_height时，请不要设置为wrap_content或0dp而不设置layout_weight。尽量按照设计图的宽高来设置，否则当控件测量得到的width和height为0时会报错。***
 
 ## 拓展
 
@@ -181,10 +182,8 @@ class CustomProgressBar @JvmOverloads constructor(
 ## 未来计划
 
 - 优化圆形进度条的渐变色效果
-- 加入进度变化监听
-- 开放通过代码设置进度条的方法
 - 矩形进度条支持滑动改变进度？
-- ...更多的需求、改进地方等待你的提出，欢迎在issue提出问题，不喜勿喷
+- ...更多的需求、改进地方等待你的提出，欢迎在issue提出问题
 
 ## 更新日志
 
