@@ -3,8 +3,11 @@ package com.hzh.zprogressbar
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.view.MotionEvent
 import androidx.annotation.ColorInt
+import androidx.core.graphics.toRect
 import com.hzh.zprogressbar.base.BaseProgressBar
+import com.hzh.zprogressbar.drag.RectDragHandler
 import com.hzh.zprogressbar.utils.dp2px
 
 /**
@@ -71,6 +74,9 @@ open class RectProgressBar @JvmOverloads constructor(
     private val mTextPath by lazy { Path() }
     private val mClipPath by lazy { Path() }
 
+    private var mIsDraggable = false // 能否拖拽改变进度，默认不能
+    private val mTouchHandler by lazy { RectDragHandler(this) }
+
     init {
         initAttrs(context, attrs)
     }
@@ -103,6 +109,8 @@ open class RectProgressBar @JvmOverloads constructor(
             mTextColorCover = getColor(R.styleable.RectProgressBar_txtColorCover, mTextColor)
             mTextMarginHorizontal =
                 getDimension(R.styleable.RectProgressBar_txtMarginHorizontal, 10f.dp2px(context))
+
+            mIsDraggable = getBoolean(R.styleable.RectProgressBar_isDraggable, false)
 
             recycle()
         }
@@ -371,6 +379,16 @@ open class RectProgressBar @JvmOverloads constructor(
         invalidate()
     }
 
+    /**
+     * 设置能否通过拖拽改变进度
+     */
+    @Synchronized
+    fun setDraggable(isDraggable: Boolean) {
+        if (mIsDraggable == isDraggable) return
+
+        mIsDraggable = isDraggable
+    }
+
     enum class TextAlign {
 
         LEFT, CENTER, RIGHT
@@ -380,4 +398,19 @@ open class RectProgressBar @JvmOverloads constructor(
 
         INNER, OUTER
     }
+
+    @Suppress("ClickableViewAccessibility")
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        if (!mIsDraggable) return super.onTouchEvent(event)
+
+        when (event?.actionMasked) {
+            MotionEvent.ACTION_DOWN -> return mTouchHandler.onActionDown(event)
+            MotionEvent.ACTION_MOVE -> mTouchHandler.onActionMove(event)
+            MotionEvent.ACTION_UP -> mTouchHandler.onActionUp(event)
+        }
+
+        return super.onTouchEvent(event)
+    }
+
+    internal fun getViewRegion() = Region(mRectTotal.toRect())
 }

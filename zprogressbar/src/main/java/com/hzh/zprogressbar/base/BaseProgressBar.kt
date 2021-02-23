@@ -262,6 +262,16 @@ abstract class BaseProgressBar @JvmOverloads constructor(
     }
 
     @Synchronized
+    internal fun setProgressByTouch(progress: Int) {
+        if (mProgress == progress) return // 进度一样就不需要刷新界面了
+
+        mProgress = progress
+
+        mIsFromUser = true
+        refreshProgress(isSecondary = false, isAnimate = false, mProgress)
+    }
+
+    @Synchronized
     private fun refreshProgress(isSecondary: Boolean, isAnimate: Boolean, progress: Int) {
         // 判断是否为ui线程
         if (Thread.currentThread().id == mUiThreadId) doRefreshProgress(isSecondary, isAnimate, progress)

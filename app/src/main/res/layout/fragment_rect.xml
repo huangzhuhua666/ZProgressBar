@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_margin="10dp"
+            app:isDraggable="true"
             app:max="50"
             app:secondaryProgress="25"/>
 

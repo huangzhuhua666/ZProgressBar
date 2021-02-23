@@ -74,6 +74,8 @@
         <attr name="txtColorCover" format="color"/>
         <!--字体水平方向的间隔-->
         <attr name="txtMarginHorizontal" format="dimension"/>
+        <!--能否拖拽改变进度-->
+        <attr name="isDraggable" format="boolean"/>
     </declare-styleable>
 
     <declare-styleable name="CircleProgressBar">

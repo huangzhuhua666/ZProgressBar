@@ -1,5 +1,6 @@
 package com.hzh.demo.fragment
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.example.hzh.base.fragment.BaseFragment
@@ -28,14 +29,16 @@ class RectFragment : BaseFragment<FragmentRectBinding>() {
     }
 
     override fun initListener() {
-
+        mBinding.pb1.setProgressListener{ fromUser, progress ->
+            Log.d("Hzh", "$fromUser --> $progress")
+        }
     }
 
     override fun onResume() {
         super.onResume()
         timer = fixedRateTimer(period = 1500) {
             mBinding.run {
-                pb1.setProgress((Math.random() * 50).toInt())
+//                pb1.setProgress((Math.random() * 50).toInt())
 
                 pb2.setSecondaryProgress(25)
                 pb2.setProgress((Math.random() * 100).toInt(), true)
