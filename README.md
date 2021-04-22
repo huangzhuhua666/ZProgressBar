@@ -1,5 +1,5 @@
 # ZProgressBar
-[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://github.com/huangzhuhua666/ZProgressBar/blob/main/LICENSE)[![Download](https://api.bintray.com/packages/huangzhuhua666/maven/progressbar/images/download.svg)](https://bintray.com/huangzhuhua666/maven/progressbar/_latestVersion)
+[![License](https://img.shields.io/badge/license-Apache%202-green.svg)](https://github.com/huangzhuhua666/ZProgressBar/blob/main/LICENSE)![Maven Central](https://img.shields.io/maven-central/v/io.github.huangzhuhua666/zprogressbar)
 
 这是一个可灵活配置的进度条，抛弃原生ProgressBar麻烦的配置style和progressDrawable形式，可直接在xml中配置进度条的颜色和圆角等功能。如果你觉得这个控件对你有帮助，请在右上角留下你的start。
 
@@ -35,7 +35,11 @@
 ```groovy
 allprojects {
     repositories {
+        // jcenter即将不可用，不建议使用
         jcenter()
+        
+        // 1.1.1版本后改用mave central，建议使用这个
+        mavenCentral()
     }
 }
 ```
@@ -43,7 +47,11 @@ allprojects {
 在模块build.gradle中添加下列代码
 
 ```groovy
-implementation 'com.hzh.ui:progressbar:最新版本'
+// jcenter即将不可用，不建议使用
+implementation 'com.hzh.ui:progressbar:最新版本(不需要v)'
+
+// 1.1.1版本后改用mave central，建议使用这个
+implementation 'io.github.huangzhuhua666:zprogressbar:最新版本(不需要v)'
 ```
 
 ## 使用
@@ -141,9 +149,14 @@ implementation 'com.hzh.ui:progressbar:最新版本'
 ### 更新进度
 
 ```kotlin
-progressBar.setMax(max: Int) // 设置最大进度
-progressBar.setSecondaryProgress(progress: Int) // 设置副进度
-progressBar.setProgress(progress: Int, isAnimate: Boolean = false) // 设置当前进度，默认不显示动画
+// 设置最大进度
+progressBar.setMax(max: Int)
+
+// 设置副进度
+progressBar.setSecondaryProgress(progress: Int)
+
+// 设置当前进度，默认不显示动画
+progressBar.setProgress(progress: Int, isAnimate: Boolean = false)
 ```
 
 *注意：上面这三个方法均可以在子线程调用。*
@@ -198,6 +211,7 @@ class CustomProgressBar @JvmOverloads constructor(
 
 | 日期       | 版本   | 更新内容                                                     |
 | :--------- | ------ | :----------------------------------------------------------- |
+| 2021/04/22 | v1.1.1 | 迁移到maven central上，建议使用maven central的方式引入       |
 | 2020/02/23 | v1.1.1 | 支持代码配置进度条样式、支持进度变化监听、支持拖拽改变进度、优化等... |
 | 2020/02/13 | v1.0.1 | 放出获取最大进度、副进度和当前进度的方法                     |
 | 2020/01/22 | v1.0.0 | 发布1.0.0版本，上传到Bintray、JCenter                        |
