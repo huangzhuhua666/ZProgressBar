@@ -406,7 +406,7 @@ open class RectProgressBar @JvmOverloads constructor(
         when (event?.actionMasked) {
             MotionEvent.ACTION_DOWN -> return mTouchHandler.onActionDown(event)
             MotionEvent.ACTION_MOVE -> mTouchHandler.onActionMove(event)
-            MotionEvent.ACTION_UP -> mTouchHandler.onActionUp(event)
+            MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> mTouchHandler.onActionUp(event)
         }
 
         return super.onTouchEvent(event)
